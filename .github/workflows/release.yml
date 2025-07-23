@@ -1,0 +1,27 @@
+name: release
+
+on:
+  push:
+    branches:
+    - main
+
+permissions:
+  contents: write
+  issues: write
+  packages: write
+  id-token: write
+  attestations: write
+
+jobs:
+  call-test:
+    uses: ./.github/workflows/test.yml
+
+  release-please:
+    needs:
+    - call-test
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    uses: ./.github/workflows/release-please.yml
+
